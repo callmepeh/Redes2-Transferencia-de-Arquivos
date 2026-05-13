@@ -1,0 +1,15 @@
+Projeto desenvolvido para a disciplina Redes de Computadores II
+da Universidade Federal do Piauí (UFPI).
+
+O objetivo é comparar desempenho e confiabilidade entre:
+- TCP nativo
+- Reliable UDP (R-UDP)
+
+- Python 3
+- Socket API
+- Docker
+- tc/netem
+- Wireshark
+- tcpdump
+- Pandas
+- Matplotlib
