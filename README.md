@@ -4,8 +4,7 @@ Projeto desenvolvido para a disciplina de Redes de Computadores II — Universid
 
 ## Integrante
 
-- Nome: SEU NOME
-- Matrícula: SUA MATRÍCULA
+- Nome: Pedro Henrique Carvalho
 
 ---
 
@@ -49,32 +48,39 @@ Além disso, o projeto realiza validação cruzada entre:
 # Estrutura do Projeto
 
 ```txt
-redes2-rudp-analysis/
+redes2-rudp/
 │
-├── README.md
-├── requirements.txt
-├── .gitignore
+├── client/
+│   ├── tcp_client.py
+│   └── rudp_client.py
 │
-├── app/
-│   ├── tcp/
-│   ├── rudp/
-│   └── common/
+├── server/
+│   ├── tcp_server.py
+│   └── rudp_server.py
+│
+├── protocol/
+│   ├── packet.py
+│   ├── checksum.py
+│   └── auth.py
 │
 ├── docker/
+│   ├── Dockerfile
+│   └── docker-compose.yml
 │
-├── network/
-│   ├── tc/
-│   └── captures/
+├── scripts/
+│   ├── tc_scenario_a.sh
+│   ├── tc_scenario_b.sh
+│   └── tc_scenario_c.sh
 │
-├── benchmark/
+├── captures/
 │
-├── tests/
+├── logs/
 │
-├── data/
-│   ├── input/
-│   └── output/
+├── analysis/
+│   ├── analyze.py
+│   └── graphs.py
 │
-└── reports/
+└── README.md
 ```
 
 ---
@@ -190,18 +196,6 @@ Os testes são executados em containers Docker Ubuntu utilizando `tc/netem`.
 
 ---
 
-# Instalação
-
-## Clonar o Repositório
-
-```bash
-git clone https://github.com/SEU_USUARIO/redes2-rudp-analysis.git
-
-cd redes2-rudp-analysis
-```
-
----
-
 # Instalar Dependências
 
 ```bash
@@ -216,101 +210,7 @@ pip install -r requirements.txt
 docker compose up --build
 ```
 
----
 
-# Execução
-
-# Servidor TCP
-
-```bash
-python app/tcp/server.py
-```
-
----
-
-# Cliente TCP
-
-```bash
-python app/tcp/client.py
-```
-
----
-
-# Servidor R-UDP
-
-```bash
-python app/rudp/server.py
-```
-
----
-
-# Cliente R-UDP
-
-```bash
-python app/rudp/client.py
-```
-
----
-
-# Simulação de Rede
-
-## Cenário A
-
-```bash
-./network/tc/scenario_a.sh
-```
-
----
-
-## Cenário B
-
-```bash
-./network/tc/scenario_b.sh
-```
-
----
-
-## Cenário C
-
-```bash
-./network/tc/scenario_c.sh
-```
-
----
-
-## Resetar Configuração de Rede
-
-```bash
-./network/tc/reset.sh
-```
-
----
-
-# Captura de Tráfego
-
-## TCPDump
-
-```bash
-sudo tcpdump -i any port 5000 -w capture.pcap
-```
-
----
-
-# Filtros Wireshark
-
-## UDP
-
-```txt
-udp.port == 5000
-```
-
-## TCP
-
-```txt
-tcp.port == 5000
-```
-
----
 
 # Benchmark
 
