@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  server:
+    build: .
+    container_name: redes_server
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - lab_redes
+    volumes:
+      - ./capturas:/app/capturas
+
+  client:
+    build: .
+    container_name: redes_client
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - lab_redes
+    depends_on:
+      - server
+    volumes:
+      - ./capturas:/app/capturas
+
+networks:
+  lab_redes:
+    driver: bridge

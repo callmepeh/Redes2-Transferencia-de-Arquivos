@@ -1,0 +1,32 @@
+services:
+  # Container que ficará esperando o arquivo
+  servidor:
+    image: ubuntu:22.04
+    container_name: servidor_redes
+    tty: true
+    stdin_open: true
+    cap_add:
+      - NET_ADMIN  # ESSENCIAL para usar o comando 'tc'
+    networks:
+      - rede_universidade
+    volumes:
+      - .:/app    # Sincroniza seus scripts Python com o container
+
+  # Container que enviará o arquivo e sofrerá as perdas de rede
+  cliente:
+    image: ubuntu:22.04
+    container_name: cliente_redes
+    tty: true
+    stdin_open: true
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - rede_universidade
+    volumes:
+      - .:/app
+    depends_on:
+      - servidor
+
+networks:
+  rede_universidade:
+    driver: bridge
