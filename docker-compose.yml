@@ -2,7 +2,7 @@ services:
   # Container que ficará esperando o arquivo
   servidor:
     build:
-      context: ..
+      context: .
       dockerfile: Docker/Dockerfile
     container_name: servidor_redes
     tty: true
@@ -12,13 +12,13 @@ services:
     networks:
       - rede_universidade
     volumes:
-      - ..:/app    # Sincroniza seus scripts Python com o container
+      - .:/app    # Sincroniza seus scripts Python com o container
     command: python3 server/tcp_server.py
 
   # Container que enviará o arquivo e sofrerá as perdas de rede
   cliente:
     build:
-      context: ..
+      context: .
       dockerfile: Docker/Dockerfile
     container_name: cliente_redes
     tty: true
@@ -28,7 +28,7 @@ services:
     networks:
       - rede_universidade
     volumes:
-      - ..:/app
+      - .:/app
     depends_on:
       - servidor
     command: tail -f /dev/null
