@@ -12,5 +12,8 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 COPY . .
 
+# Instala dependências do Python
+RUN pip3 install --no-cache-dir -r requirements.txt
+
 # Comando padrão (pode ser sobrescrito no docker-compose)
-CMD ["python3", "server.py"]
+CMD ["python3", "server/tcp_server.py"]

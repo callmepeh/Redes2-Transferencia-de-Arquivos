@@ -1,5 +1,5 @@
 services:
-  # Container que ficará esperando o arquivo
+  # ─── Servidor TCP (porta 5000) ────────────────────────────────────────────
   servidor:
     build:
       context: .
@@ -8,14 +8,35 @@ services:
     tty: true
     stdin_open: true
     cap_add:
-      - NET_ADMIN  # ESSENCIAL para usar o comando 'tc'
+      - NET_ADMIN   # Necessário para usar o comando 'tc'
+    environment:
+      - PYTHONPATH=/app
     networks:
       - rede_universidade
     volumes:
-      - .:/app    # Sincroniza seus scripts Python com o container
+      - .:/app
     command: python3 server/tcp_server.py
 
-  # Container que enviará o arquivo e sofrerá as perdas de rede
+  # ─── Servidor R-UDP (porta 5001) ─────────────────────────────────────────
+  servidor_rudp:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile
+    container_name: servidor_rudp_redes
+    tty: true
+    stdin_open: true
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - RUDP_PORT=5001
+      - PYTHONPATH=/app
+    networks:
+      - rede_universidade
+    volumes:
+      - .:/app
+    command: python3 server/rudp_server.py
+
+  # ─── Cliente (pode rodar TCP ou R-UDP) ────────────────────────────────────
   cliente:
     build:
       context: .
@@ -25,14 +46,21 @@ services:
     stdin_open: true
     cap_add:
       - NET_ADMIN
+    environment:
+      - TCP_SERVER_HOST=servidor
+      - RUDP_SERVER_HOST=servidor_rudp
+      - RUDP_PORT=5001
+      - PYTHONPATH=/app
     networks:
       - rede_universidade
     volumes:
       - .:/app
     depends_on:
       - servidor
-    command: tail -f /dev/null
+      - servidor_rudp
+    command: tail -f /dev/null  # Mantém o container vivo para executar comandos manualmente
 
 networks:
   rede_universidade:
     driver: bridge
+
