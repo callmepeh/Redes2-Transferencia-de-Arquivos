@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from benchmark.scenarios import SCENARIOS
 from benchmark.runner import run_benchmark
 
-RUNS_PER_SCENARIO = 10  # PDF pede entre 10 e 30
+RUNS_PER_SCENARIO = 15  # PDF pede entre 10 e 30
 
 
 def apply_tc(scenario_key: str):
