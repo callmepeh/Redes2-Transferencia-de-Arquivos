@@ -1,0 +1,156 @@
+​
+
+​
+MINISTÉRIO DA EDUCAÇÃO
+UNIVERSIDADE FEDERAL DO PIAUÍ
+CAMPUS SENADOR HELVÍDIO NUNES DE BARROS
+Curso de Bacharel Sistemas de Informação
+
+​
+
+REDES DE COMPUTADORES II
+Segunda Avaliação de Redes de Computadores II de 2026-1
+Valor: 10.
+
+Tema: Análise de Desempenho e Confiabilidade em Camadas de Transporte (TCP
+vs. R-UDP)
+1. Objetivo
+Implementar e comparar dois sistemas de transferência de arquivos: um utilizando o
+protocolo TCP (nativo) e outro utilizando o protocolo UDP com uma camada de
+confiabilidade (Reliable UDP) implementada pelo aluno. O foco é a validação cruzada
+entre as métricas da aplicação e a inspeção do tráfego de rede.
+2. Objetivos Específicos
+●​ Implementar controle de fluxo e de erros (Stop-and-Wait ou Go-Back-N) sobre
+UDP.
+●​ Estruturar um protocolo de aplicação com cabeçalhos personalizados e
+mecanismos de autenticação.
+●​ Simular condições adversas de rede (perda de pacotes e latência) no Docker.
+●​ Validar os dados estatísticos da aplicação com o Wireshark/TCPDump.
+○​ Para isso, faça entre 10 e 30 execuções para gerar dados estatísticos:
+vazão mínima, média, máxima e desvio padrão.
+●​ Gerar uma análise comparativa em Python (Pandas/Matplotlib) a partir de logs de
+tráfego.
+3. O Projeto
+O aluno deve desenvolver um par Cliente/Servidor em Python capaz de operar em dois
+modos:
+1.​ Modo TCP: Transferência de arquivos por meio de sockets TCP padrão.
+2.​ Modo R-UDP (Reliable UDP): O aluno deve garantir a entrega íntegra do arquivo
+sobre UDP, implementando:
+○​ Números de sequência e confirmações (ACKs).
+○​ Mecanismo de timeout e retransmissão.
+
+​
+
+​
+MINISTÉRIO DA EDUCAÇÃO
+UNIVERSIDADE FEDERAL DO PIAUÍ
+CAMPUS SENADOR HELVÍDIO NUNES DE BARROS
+Curso de Bacharel Sistemas de Informação
+
+​
+
+○​ Checksum ou validação de integridade por bloco.
+
+3.1. Cabeçalho de Aplicação Personalizado
+Toda mensagem enviada deve conter um campo X-Custom-Auth contendo o Hash
+SHA-256 da (Matrícula do Aluno + Nome), permitindo a identificação do tráfego no
+Wireshark.
+3.2. Ambiente de Teste e Simulação
+●​ Docker: Uso de containers Ubuntu.
+●​ Controle de Tráfego (tc): É obrigatório o uso do comando tc qdisc para simular:
+○​ Cenário A: 0% de perda / 10 ms de delay.
+○​ Cenário B: 5% de perda / 50 ms de delay.
+○​ Cenário C: 10% de perda / 100 ms de delay.
+4. Validação Cruzada (A Prova Real)
+O diferencial desta avaliação é a obrigatoriedade de confrontar os dados:
+●​ Aplicação: O código em Python deve registrar o tempo de transferência e o
+throughput.
+●​ Rede (Wireshark/tcpdump): O aluno deve capturar o tráfego (.pcap) durante os
+testes e exportar os dados para CSV. No relatório, deve-se verificar se o volume de
+dados e o tempo registrados pela aplicação condizem com o que o Wireshark
+capturou na interface de rede.
+5. Critérios de Avaliação (10 Pontos)
+Critério
+
+Descrição
+
+Pontos
+
+Ambiente Docker & Configuração de rede e scripts de simulação de 1.0
+TC
+falhas.
+Protocolo R-UDP
+
+Eficácia do controle de erro e da retransmissão 2.5
+sobre UDP.
+
+Validação
+Wireshark/Tcpdump
+
+Capturas de tela e arquivos .pcap que provam o 1.5
+tráfego e o X-Custom-Auth.
+
+​
+
+​
+MINISTÉRIO DA EDUCAÇÃO
+UNIVERSIDADE FEDERAL DO PIAUÍ
+CAMPUS SENADOR HELVÍDIO NUNES DE BARROS
+Curso de Bacharel Sistemas de Informação
+
+​
+
+Análise Estatística
+
+Integração
+Dados
+
+Gráficos (Média/Desvio padrão) comparando TCP vs 2.0
+R-UDP em cada cenário.
+
+de Comparação entre o que a aplicação mediu e o que 1.0
+o Wireshark/TCPDump registrou.
+
+Relatório (SBC)
+
+Documentação técnica, discussão dos resultados e 1.0
+respostas às perguntas.
+
+Vídeo
+Demonstrativo
+
+Explicação da implementação e da prova dos testes 1.0
+de perda de pacotes.
+
+6. Entrega Esperada
+1.​ Código no GitHub: Sockets, Dockerfile e script de geração de gráficos.
+2.​ Arquivos de Captura: Logs .pcap dos testes principais.
+3.​ Relatório em PDF: Seguindo o modelo da SBC, com análise comparativa.
+4.​ Vídeo no YouTube: Demonstração prática (máximo 15 minutos).
+7. Perguntas Obrigatórias no Relatório
+1.​ Como a curva de throughput do TCP se comportou em comparação ao seu R-UDP
+sob 10% de perda?
+2.​ Ao analisar o Wireshark/TCPDump, qual foi o overhead (em bytes) introduzido
+pelos cabeçalhos do seu protocolo R-UDP?
+3.​ Houve discrepância entre o tempo medido pelo Python e o registrado no
+Wireshark/TCPDump? Justifique.
+Data de Entrega: 29/05/2026 Trabalho Individual
+Penalidades:
+●​ Ausência de capturas de rede (Wireshark/tcpdump).
+●​ Trabalhos idênticos (serão verificados pela estrutura dos pacotes e pelo hash da
+matrícula).
+●​ Uso de bibliotecas de alto nível (ex.: Scapy ou frameworks de rede).
+
+​
+
+​
+MINISTÉRIO DA EDUCAÇÃO
+UNIVERSIDADE FEDERAL DO PIAUÍ
+CAMPUS SENADOR HELVÍDIO NUNES DE BARROS
+Curso de Bacharel Sistemas de Informação
+
+​
+
+Bom Trabalho!
+
+
