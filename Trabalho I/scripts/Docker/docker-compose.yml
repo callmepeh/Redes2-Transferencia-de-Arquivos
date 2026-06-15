@@ -1,0 +1,38 @@
+services:
+  # Container que ficará esperando o arquivo
+  servidor:
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile
+    container_name: servidor_redes
+    tty: true
+    stdin_open: true
+    cap_add:
+      - NET_ADMIN  # ESSENCIAL para usar o comando 'tc'
+    networks:
+      - rede_universidade
+    volumes:
+      - ..:/app    # Sincroniza seus scripts Python com o container
+    command: python3 server/tcp_server.py
+
+  # Container que enviará o arquivo e sofrerá as perdas de rede
+  cliente:
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile
+    container_name: cliente_redes
+    tty: true
+    stdin_open: true
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - rede_universidade
+    volumes:
+      - ..:/app
+    depends_on:
+      - servidor
+    command: tail -f /dev/null
+
+networks:
+  rede_universidade:
+    driver: bridge
