@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Página de Teste - Mini Web Server</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧪 Página de Teste</h1>
+            <p class="subtitle">Verificação do funcionamento do Mini-Servidor Web</p>
+        </header>
+
+        <section class="details">
+            <h2>Informações do Servidor</h2>
+            <ul>
+                <li><strong>Servidor:</strong> MiniWebServer/1.0 (R-UDP/TCP)</li>
+                <li><strong>Protocolo:</strong> HTTP/1.1</li>
+                <li><strong>Autenticação:</strong> X-Custom-Auth (SHA-256)</li>
+                <li><strong>Transporte:</strong> TCP :80 / R-UDP :81</li>
+                <li><strong>Resolução:</strong> Mini-DNS :53</li>
+            </ul>
+        </section>
+
+        <section class="test">
+            <h2>Testes Realizados</h2>
+            <ul>
+                <li>✅ Requisição GET bem-sucedida (200 OK)</li>
+                <li>✅ Cabeçalho Content-Type correto</li>
+                <li>✅ Cabeçalho Content-Length correto</li>
+                <li>✅ Cabeçalho X-Custom-Auth presente</li>
+                <li>✅ Resposta 404 para páginas inexistentes</li>
+            </ul>
+        </section>
+
+        <section class="info">
+            <h2>Resposta DNS</h2>
+            <p>Esta página foi carregada após resolução de nome via Mini-DNS.</p>
+            <p><strong>Fluxo completo:</strong> DNS Query → Resposta DNS → HTTP GET → 200 OK</p>
+        </section>
+
+        <footer>
+            <p><a href="/">Voltar à página inicial</a></p>
+        </footer>
+    </div>
+</body>
+</html>

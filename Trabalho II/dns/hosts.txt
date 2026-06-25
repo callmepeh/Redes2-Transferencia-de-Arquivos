@@ -1,0 +1,15 @@
+# Arquivo de zona estático para o Mini-DNS
+# Formato: NOME_DOMINIO IP
+# Consultas do tipo A (IPv4)
+
+# Servidor Web principal
+servidor.local     10.0.0.10
+www.servidor.local 10.0.0.10
+web.local          10.0.0.10
+
+# Servidor DNS (loopback - não usado externamente)
+dns.local          127.0.0.1
+
+# Domínios extras para teste
+teste.local        10.0.0.20
+api.local          10.0.0.30

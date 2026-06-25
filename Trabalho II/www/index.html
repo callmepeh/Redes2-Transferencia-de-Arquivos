@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-Servidor Web - Redes II</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 Mini-Servidor HTTP/1.1</h1>
+            <p class="subtitle">Redes de Computadores II — UFPI</p>
+        </header>
+
+        <section class="info">
+            <h2>Sobre o Projeto</h2>
+            <p>Este é o <strong>Mini-Servidor Web</strong> desenvolvido para a Terceira Avaliação de Redes de Computadores II.</p>
+            <p>O sistema evolui o trabalho anterior de transferência de arquivos (TCP vs R-UDP) para um servidor HTTP/1.1 funcional, com:</p>
+            <ul>
+                <li>✅ Resolução de Nomes via <strong>Mini-DNS</strong> (UDP)</li>
+                <li>✅ Servidor HTTP/1.1 sobre <strong>TCP nativo</strong></li>
+                <li>✅ Servidor HTTP/1.1 sobre <strong>R-UDP</strong> (Reliable UDP)</li>
+                <li>✅ Cabeçalho personalizado <code>X-Custom-Auth</code></li>
+                <li>✅ Simulação de rede com <strong>tc/netem</strong> (perda e latência)</li>
+                <li>✅ Validação com <strong>Wireshark/TCPDump</strong></li>
+            </ul>
+        </section>
+
+        <section class="details">
+            <h2>Arquitetura</h2>
+            <div class="arch">
+                <div class="arch-item">
+                    <span class="arch-icon">📡</span>
+                    <h3>Cliente DNS</h3>
+                    <p>Resolve nomes via UDP</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="arch-item">
+                    <span class="arch-icon">🗄️</span>
+                    <h3>Servidor DNS</h3>
+                    <p>Porta 53 · hosts.txt</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="arch-item">
+                    <span class="arch-icon">🌐</span>
+                    <h3>Cliente HTTP</h3>
+                    <p>GET /arquivo.html</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="arch-item">
+                    <span class="arch-icon">⚡</span>
+                    <h3>Servidor Web</h3>
+                    <p>TCP :80 / R-UDP :81</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="test">
+            <h2>Testes Disponíveis</h2>
+            <ul>
+                <li><a href="/">Página Inicial</a> (index.html)</li>
+                <li><a href="/teste.html">Página de Teste</a> (teste.html)</li>
+                <li><a href="/style.css">Arquivo CSS</a> (style.css)</li>
+                <li><a href="/arquivo_100kb.txt">Arquivo 100kB</a> (para benchmark)</li>
+                <li><a href="/arquivo_1mb.txt">Arquivo 1MB</a> (para benchmark)</li>
+                <li><a href="/arquivo_10mb.txt">Arquivo 10MB</a> (para benchmark)</li>
+                <li><a href="/pagina_inexistente.html">Página 404</a> (teste de erro)</li>
+            </ul>
+        </section>
+
+        <section class="info">
+            <h2>Aluno</h2>
+            <p><strong>Pedro Henrique de Carvalho Sousa</strong> — Matrícula: <code>20239017876</code></p>
+            <p><strong>Disciplina:</strong> Redes de Computadores II (2026-1)</p>
+            <p><strong>Universidade Federal do Piauí — CSHNB</strong></p>
+        </section>
+
+        <footer>
+            <p>Protocolo com <code>X-Custom-Auth</code>: <span id="auth-hash">SHA-256(Matrícula + Nome)</span></p>
+        </footer>
+    </div>
+</body>
+</html>

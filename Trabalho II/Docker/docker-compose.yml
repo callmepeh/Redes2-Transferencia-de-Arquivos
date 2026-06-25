@@ -1,0 +1,72 @@
+services:
+  # Container do Servidor DNS
+  servidor_dns:
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile
+    container_name: dns_redes
+    tty: true
+    stdin_open: true
+    cap_add:
+      - NET_ADMIN
+    networks:
+      lab_redes:
+        ipv4_address: 10.0.0.2
+    volumes:
+      - ..:/app
+    command: python3 dns/server.py --port 53
+
+  # Container do Servidor Web (HTTP/1.1 sobre TCP e R-UDP)
+  servidor_web:
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile
+    container_name: web_redes
+    tty: true
+    stdin_open: true
+    cap_add:
+      - NET_ADMIN
+    networks:
+      lab_redes:
+        ipv4_address: 10.0.0.10
+    volumes:
+      - ..:/app
+    depends_on:
+      - servidor_dns
+    # Inicia ambos servidores HTTP (TCP:80 e R-UDP:81)
+    command: >
+      bash -c "python3 server/http_server.py --port 80 --www www/ &
+               python3 server/rudp_http_server.py --port 81 --www www/ &
+               tail -f /dev/null"
+
+  # Container do Cliente
+  cliente:
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile
+    container_name: cliente_redes
+    tty: true
+    stdin_open: true
+    cap_add:
+      - NET_ADMIN  # ESSENCIAL para usar o comando 'tc'
+    networks:
+      lab_redes:
+        ipv4_address: 10.0.0.100
+    volumes:
+      - ..:/app
+    depends_on:
+      - servidor_dns
+      - servidor_web
+    environment:
+      DNS_SERVER_HOST: "10.0.0.2"
+      DNS_SERVER_PORT: "53"
+      HTTP_TCP_PORT: "80"
+      HTTP_RUDP_PORT: "81"
+    command: tail -f /dev/null
+
+networks:
+  lab_redes:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/24
