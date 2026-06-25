@@ -97,9 +97,12 @@ for SCENARIO in A B C; do
     PYTHONPATH=/app python3 benchmark/runner.py --protocol rudp --runs $RUNS --scenario $SCENARIO
 
     # Para a captura
-    sleep 1
-    kill $TCPDUMP_PID 2>/dev/null
+    # Aguarda 3s para garantir que tcpdump termine de escrever os buffers
+    sleep 3
+    # Envia SIGTERM para finalização graciosa (tcpdump flusha os buffers ao receber)
+    kill -TERM $TCPDUMP_PID 2>/dev/null
     wait $TCPDUMP_PID 2>/dev/null
+    sync  # Garante que buffers de disco sejam descarregados
     echo "[CAPTURE] Captura do cenário $SCENARIO salva."
 
     # Limpa tc
